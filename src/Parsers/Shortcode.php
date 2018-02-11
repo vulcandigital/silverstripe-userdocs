@@ -5,6 +5,7 @@ namespace Vulcan\UserDocs\Parsers;
 use SilverStripe\Control\Controller;
 use SilverStripe\Core\Config\Configurable;
 use SilverStripe\Core\Injector\Injectable;
+use SilverStripe\ORM\FieldType\DBHTMLText;
 use SilverStripe\Security\Security;
 use SilverStripe\View\ArrayData;
 use SilverStripe\View\Parsers\ShortcodeParser;
@@ -43,15 +44,21 @@ class Shortcode
      */
     public static function code($arguments, $content = null, $parser = null, $tagName = null)
     {
-        if (!isset($arguments['style']) || $arguments['style'] == 'inline') {
+        $htmlText = DBHTMLText::create();
+
+        if (!$content) {
+            return $htmlText->setValue('');
+        }
+
+        if (!isset($arguments['display']) || $arguments['display'] == 'inline') {
             return ArrayData::create([
-                'Content' => $content
+                'Content' => $htmlText->setValue($parser->parse($content))
             ])->renderWith('Vulcan\UserDocs\Parsers\Shortcode\CodeInline');
         }
 
         return $parser->parse(ArrayData::create([
-            'Content'  => $content,
-            'Language' => $arguments['lang'] ?: null
+            'Content'  => $htmlText->setValue($parser->parse($content)),
+            'Language' => isset($arguments['lang']) ? $arguments['lang'] : null
         ])->renderWith('Vulcan\UserDocs\Parsers\Shortcode\CodeBlock'));
     }
 

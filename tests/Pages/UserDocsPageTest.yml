@@ -1,0 +1,21 @@
+Vulcan\UserDocs\Pages\UserDocs:
+  first:
+    ID: 99
+    Title: Documentation
+    URLSegment: docs
+Vulcan\UserDocs\Pages\UserDocsPage:
+  first:
+    Title: Getting Started
+    URLSegment: getting-started
+    ParentID: 99
+    Content: >
+               <h1>We need</h1>
+               <p>Lorem ipsum dolor sit amet</p>
+               <h2>to ensure</h2>
+               <p>Lorem ipsum dolor sit amet</p>
+               <h3>to ensure</h3>
+               <p>Lorem ipsum dolor sit amet</p>
+               <h4>that all headings</h4>
+               <p>Lorem ipsum dolor sit amet</p>
+               <h5>convert to anchor links</h5>
+               <p>Lorem ipsum dolor sit amet</p>

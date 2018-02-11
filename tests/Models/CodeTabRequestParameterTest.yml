@@ -1,0 +1,31 @@
+Vulcan\UserDocs\Pages\UserDocs:
+  first:
+    ID: 1000
+    Title: Documentation
+    URLSegment: docs
+Vulcan\UserDocs\Pages\UserDocsPage:
+  first:
+    ID: 1001
+    Title: Getting Started
+    URLSegment: getting-started
+    ParentID: 1000
+Vulcan\UserDocs\Models\CodeTabRequestParameter:
+  first:
+    Parameter: foo
+    Explanation: bar
+Vulcan\UserDocs\Models\CodeTabExample:
+  first:
+    Language: php
+    Content: "<?php echo json_encode(['Hello World!])' ?>"
+  second:
+    Language: bash
+    Content: "curl -X google.com"
+Vulcan\UserDocs\Models\CodeTab:
+  first:
+    Title: Hello World!
+    Examples: =>Vulcan\UserDocs\Models\CodeTabExample.first,=>Vulcan\UserDocs\Models\CodeTabExample.second
+    RequestMethod: GET
+    RequestParameters: =>Vulcan\UserDocs\Models\CodeTabRequestParameter.first
+    Response: "{[Hello World!]}"
+    ResponseLanguage: json
+    PageID: 1001

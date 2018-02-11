@@ -7,18 +7,26 @@ use SilverStripe\View\Parsers\ShortcodeParser;
 use SilverStripe\View\Parsers\URLSegmentFilter;
 use Sunra\PhpSimple\HtmlDomParser;
 
+/**
+ * Trait ParseHeadingsAsAnchors
+ * @package Vulcan\UserDocs\Traits
+ */
 trait ParseHeadingsAsAnchors
 {
+    /** @var array Unique slug storage to ensure there are no duplicates */
     private $anchors = [];
 
     /**
-     * @param null $content
+     * @param null|string $content Optionally force other content into this method to be parsed
+     *
+     * @param null|string $link An optional base url for the anchor,  by default it will attempt $this->Link()
      *
      * @return string
      */
-    public function getAnchoredContent($content = null)
+    public function getAnchoredContent($content = null, $link = null)
     {
-        $content = ($content) ? $content : $this->Content;
+        $content = ($content) ?: $this->Content;
+        $link = $link ?: $this->Link();
 
         $parser = HtmlDomParser::str_get_html((string)$content);
         if (!$parser) {
@@ -30,7 +38,7 @@ trait ParseHeadingsAsAnchors
                 $text = $heading->innertext();
                 $slug = $this->getSlugFromHeading($text);
                 $heading->setAttribute('id', $slug);
-                $heading->innertext = sprintf("<a href='%s#%s'>%s</a>", Controller::curr()->Link(), $slug, $text);
+                $heading->innertext = sprintf("<a href='%s#%s'>%s</a>", $link, $slug, $text);
             }
         }
 
@@ -43,12 +51,12 @@ trait ParseHeadingsAsAnchors
      * @return string
      * @throws \Exception
      */
-    private function getSlugFromHeading($heading)
+    public function getSlugFromHeading($heading)
     {
         $filter = URLSegmentFilter::create();
 
-        for ($i = 0; $i < 1000; $i++) {
-            $slug = $filter->filter($heading) . (($i) ? "-$i" : '');
+        for ($i = 1; $i < 1000; $i++) {
+            $slug = $filter->filter($heading) . (($i > 1) ? "-$i" : '');
             if (!in_array($slug, $this->anchors)) {
                 $this->anchors[] = $slug;
                 return $slug;
