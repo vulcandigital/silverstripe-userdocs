@@ -12,7 +12,7 @@ class ShortcodeTest extends FunctionalTest
     {
         $allMethods = get_class_methods(Shortcode::class);
         Shortcode::registerShortcodes();
-        $registered = array_keys(ShortcodeParser::get()->getRegisteredShortcodes());
+        $registered = ShortcodeParser::get()->getRegisteredShortcodes();
 
         foreach ($allMethods as $method) {
             // ignore inherited methods
@@ -20,7 +20,7 @@ class ShortcodeTest extends FunctionalTest
                 continue;
             }
 
-            $this->assertArrayHasKey($method, $registered, "Failed to find %s registered as a shortcode");
+            $this->assertArrayHasKey($method, $registered, sprintf("Failed to find %s registered as a shortcode", $method));
         }
     }
 }
