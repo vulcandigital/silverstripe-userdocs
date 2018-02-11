@@ -1,0 +1,6 @@
+---
+after
+---
+PageController:
+  extensions:
+    - Vulcan\UserDocs\Extensions\PageControllerExtension

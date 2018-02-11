@@ -1,0 +1,22 @@
+@import "imports/Shortcodes";
+@import "imports/CodeTab";
+@import "imports/SideNav";
+
+.userdocs-content {
+  margin: 25px 0;
+
+  h1, h2, h3, h4, h5 {
+    > a {
+      &:hover {
+        text-decoration: none;
+        &:after {
+          content: '\f0c1';
+          font-family: 'FontAwesome';
+          font-size: 27px;
+          color: #ccc;
+          margin-left: 10px;
+        }
+      }
+    }
+  }
+}

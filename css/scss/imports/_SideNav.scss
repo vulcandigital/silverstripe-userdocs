@@ -1,0 +1,89 @@
+$activeBackground: #a072eb;
+$activeColor: white;
+
+.userdocs-nav {
+  background: whitesmoke;
+  margin: 25px 0;
+  border-radius: 5px;
+
+  > h2 {
+    border-radius: 5px 5px 0 0;
+    background: #333;
+    color: white;
+    margin: 0;
+    padding: 15px;
+    font-size: 20px;
+  }
+
+  > ul.nav {
+    > li {
+      .nav-link.active, .nav-link:hover, .nav-link:focus, .nav-link:active {
+        background: $activeBackground;
+        color: $activeColor;
+      }
+
+      > .nav-link {
+        //border-bottom: 1px solid #ccc;
+      }
+
+      &:not(:first-child) {
+        //border-top: 1px solid #ccc;
+      }
+
+      &.last-child:not(.has-children) {
+        > a {
+          border-radius: 0 0 5px 5px;
+        }
+      }
+
+      &:last-child {
+        > ul {
+          > li {
+            &:last-child {
+              > a {
+                border-radius: 0 0 5px 5px;
+              }
+            }
+          }
+        }
+      }
+
+      > ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+
+        li {
+          .nav-link {
+            //border-bottom: 1px solid #ccc;
+            color: #333;
+
+            &:last-child {
+              border-bottom: 0;
+            }
+
+            &:before {
+              content: '\f0da';
+              margin-right: 15px;
+              font-family: 'FontAwesome';
+              color: $activeBackground;
+            }
+
+            &.active:before, &:hover:before, &:focus:before, &:active:before {
+              color: $activeColor;
+            }
+          }
+        }
+      }
+
+      &.has-children {
+        > a {
+          > .fa-caret-down {
+            position: relative;
+            top: 4px;
+          }
+        }
+      }
+    }
+  }
+}
