@@ -20,6 +20,8 @@ class PageControllerExtension extends Extension
     /**
      * Helper to determine if the current page is apart of this module
      *
+     * @param null $className
+     *
      * @return bool
      */
     public function IsUserDocsPage($className = null)
@@ -59,6 +61,8 @@ class PageControllerExtension extends Extension
 
     public function UserDocsBreadcrumb()
     {
-        return ArrayData::create(['Breadcrumbs' => $this->generateUserDocsBreadcrumb()])->renderWith('Vulcan\UserDocs\Pages\Includes\Breadcrumb');
+        return ArrayData::create([
+            'Breadcrumbs' => $this->generateUserDocsBreadcrumb()
+        ])->renderWith('Vulcan\UserDocs\Pages\Includes\Breadcrumb');
     }
 }

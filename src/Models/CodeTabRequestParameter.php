@@ -27,7 +27,7 @@ class CodeTabRequestParameter extends DataObject
     private static $db = [
         'Parameter'   => 'Varchar(50)',
         'Explanation' => 'HTMLText',
-        'Sort'             => 'Int'
+        'Sort'        => 'Int'
     ];
 
     private static $has_one = [
@@ -66,9 +66,10 @@ class CodeTabRequestParameter extends DataObject
         $fields = parent::getCMSFields();
 
         $fields->removeByName(['Sort']);
-        
+
         return $fields;
     }
+
     public function getTitle()
     {
         return $this->Parameter;

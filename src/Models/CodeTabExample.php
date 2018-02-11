@@ -50,7 +50,8 @@ class CodeTabExample extends DataObject
         }
 
         if (!$this->ID && static::get()->filter('Language', $this->Language)->first()) {
-            $result->addFieldError('Language', 'An example in that language already exists, please select another');
+            $error = 'An example in that language already exists, please select another';
+            $result->addFieldError('Language', $error);
         }
 
         if (!$this->Content) {
@@ -72,8 +73,10 @@ class CodeTabExample extends DataObject
     {
         $fields = parent::getCMSFields();
 
+        $languageField = DropdownField::create('Language', 'Language', static::getLanguageMap()->toMap())->setHasEmptyDefault(true)->setEmptyString('Please select ...');
+
         $fields->removeByName('RequestMethod');
-        $fields->replaceField('Language', DropdownField::create('Language', 'Language', static::getLanguageMap()->toMap())->setHasEmptyDefault(true)->setEmptyString('Please select ...'));
+        $fields->replaceField('Language', $languageField);
 
         return $fields;
     }

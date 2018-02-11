@@ -46,10 +46,3 @@ class UserDocsPage extends \Page
         return $fields;
     }
 }
-
-class UserDocsPageController extends \PageController
-{
-    use ParseHeadingsAsAnchors;
-
-    private static $allowed_actions = [];
-}

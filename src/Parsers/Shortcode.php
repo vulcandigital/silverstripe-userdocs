@@ -15,10 +15,10 @@ class Shortcode
     use Injectable, Configurable;
 
     /**
-     * Dynamically register all methods in this class as a shortcode. The method name will become the shortcode, for example
-     * a function with the name of "code" will be registered as [code][/code]
+     * Dynamically register all methods in this class as a shortcode. The method name will become
+     * the shortcode, for example a function with the name of "code" will be registered as [code][/code]
      *
-     * @return void;
+     * @return void
      */
     public static function registerShortcodes()
     {
@@ -37,28 +37,33 @@ class Shortcode
      * @param array                $arguments
      * @param null|string          $content
      * @param null|ShortcodeParser $parser
-     * @param string               $tagName
+     * @param string|null          $tagName
      *
      * @return \SilverStripe\ORM\FieldType\DBHTMLText|string
      */
-    public static function code($arguments, $content = null, $parser = null, $tagName)
+    public static function code($arguments, $content = null, $parser = null, $tagName = null)
     {
         if (!isset($arguments['style']) || $arguments['style'] == 'inline') {
-            return ArrayData::create(['Content' => $content])->renderWith('Vulcan\UserDocs\Parsers\Shortcode\CodeInline');
+            return ArrayData::create([
+                'Content' => $content
+            ])->renderWith('Vulcan\UserDocs\Parsers\Shortcode\CodeInline');
         }
 
-        return $parser->parse(ArrayData::create(['Content' => $content, 'Language' => $arguments['lang'] ?: null])->renderWith('Vulcan\UserDocs\Parsers\Shortcode\CodeBlock'));
+        return $parser->parse(ArrayData::create([
+            'Content'  => $content,
+            'Language' => $arguments['lang'] ?: null
+        ])->renderWith('Vulcan\UserDocs\Parsers\Shortcode\CodeBlock'));
     }
 
     /**
      * @param array                $arguments
      * @param null|string          $content
      * @param null|ShortcodeParser $parser
-     * @param string               $tagName
+     * @param string|null          $tagName
      *
      * @return \SilverStripe\ORM\FieldType\DBHTMLText|string
      */
-    public static function codetab($arguments, $content = null, $parser = null, $tagName)
+    public static function codetab($arguments, $content = null, $parser = null, $tagName = null)
     {
         $pageId = (isset($arguments['page_id'])) ? $arguments['page_id'] : Controller::curr()->ID;
 
@@ -70,10 +75,14 @@ class Shortcode
             user_error('No id was supplied', E_USER_ERROR);
         }
 
-        $record = CodeTab::get()->filter('PageID', $pageId)->filterAny(['ID' => $arguments['id'], 'Slug' => $arguments['id']])->first();
+        $record = CodeTab::get()->filter('PageID', $pageId)->filterAny([
+            'ID'   => $arguments['id'],
+            'Slug' => $arguments['id']
+        ])->first();
 
         if (!$record) {
-            user_error(sprintf('Code identifier %s was not found as a registered tab for the active page'), E_USER_ERROR);
+            $error = 'Code identifier %s was not found as a registered tab for the active page';
+            user_error(sprintf($error), E_USER_ERROR);
         }
 
         return $parser->parse($record->renderWith('Vulcan\UserDocs\Parsers\Shortcode\CodeTab'));
@@ -85,11 +94,11 @@ class Shortcode
      * @param array                $arguments
      * @param null|string          $content
      * @param null|ShortcodeParser $parser
-     * @param string               $tagName
+     * @param string|null          $tagName
      *
      * @return \SilverStripe\ORM\FieldType\DBHTMLText|string
      */
-    public static function logged_in($arguments, $content = null, $parser = null, $tagName)
+    public static function logged_in($arguments, $content = null, $parser = null, $tagName = null)
     {
         if (!$me = Security::getCurrentUser()) {
             return '';
@@ -104,11 +113,11 @@ class Shortcode
      * @param array                $arguments
      * @param null|string          $content
      * @param null|ShortcodeParser $parser
-     * @param string               $tagName
+     * @param string|null          $tagName
      *
      * @return \SilverStripe\ORM\FieldType\DBHTMLText|string
      */
-    public static function not_logged_in($arguments, $content = null, $parser = null, $tagName)
+    public static function not_logged_in($arguments, $content = null, $parser = null, $tagName = null)
     {
         if ($me = Security::getCurrentUser()) {
             return '';

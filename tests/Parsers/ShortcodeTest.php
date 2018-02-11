@@ -20,7 +20,8 @@ class ShortcodeTest extends FunctionalTest
                 continue;
             }
 
-            $this->assertArrayHasKey($method, $registered, sprintf("Failed to find %s registered as a shortcode", $method));
+            $error = sprintf("Failed to find %s registered as a shortcode", $method);
+            $this->assertArrayHasKey($method, $registered, $error);
         }
     }
 }

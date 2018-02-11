@@ -49,7 +49,7 @@ class CodeTabParameterType extends DataObject
             'int'    => 'integer',
             'bool'   => 'boolean',
             'float'  => 'float',
-            'array' => 'array',
+            'array'  => 'array',
             'null'   => 'null'
         ];
     }
