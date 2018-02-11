@@ -1,0 +1,70 @@
+Vulcan\UserDocs\Pages\UserDocs:
+  first:
+    ID: 1000
+    Title: Documentation
+    URLSegment: docs
+Vulcan\UserDocs\Pages\UserDocsPage:
+  first:
+    ID: 1001
+    Title: Getting Started
+    URLSegment: getting-started
+    ParentID: 1000
+Vulcan\UserDocs\Models\CodeTabParameterType:
+  first:
+    Title: string
+  second:
+    Title: integer
+    ShortTitle: int
+  third:
+    Title: boolean
+    ShortTitle: bool
+  fourth:
+    Title: null
+    ShortTitle: null
+  fifth:
+    Title: float
+    ShortTitle: float
+  sixth:
+    Title: array
+    ShortTitle: array
+Vulcan\UserDocs\Models\CodeTabRequestParameter:
+  first:
+    Parameter: foo
+    Explanation: bar
+Vulcan\UserDocs\Models\CodeTabResponseParameter:
+  first:
+    Parameter: bar
+    Explanation: foo
+    Types: =>Vulcan\UserDocs\Models\CodeTabParameterType.first,=>Vulcan\UserDocs\Models\CodeTabParameterType.second
+  second:
+    Parameter: white
+    Explanation: noise
+    Types: =>Vulcan\UserDocs\Models\CodeTabParameterType.third
+  third:
+    Parameter: black
+    Explanation: silence
+    Types: =>Vulcan\UserDocs\Models\CodeTabParameterType.sixth
+    Children: =>Vulcan\UserDocs\Models\CodeTabResponseParameter.second
+Vulcan\UserDocs\Models\CodeTabExample:
+  first:
+    Language: php
+    Content: "<?php echo json_encode(['Hello World!])' ?>"
+  second:
+    Language: bash
+    Content: "curl -X google.com"
+Vulcan\UserDocs\Models\CodeTab:
+  first:
+    Title: Hello World!
+    Examples: =>Vulcan\UserDocs\Models\CodeTabExample.first,=>Vulcan\UserDocs\Models\CodeTabExample.second
+    RequestMethod: GET
+    RequestParameters: =>Vulcan\UserDocs\Models\CodeTabRequestParameter.first
+    ResponseParameters: =>Vulcan\UserDocs\Models\CodeTabResponseParameter.first,=>Vulcan\UserDocs\Models\CodeTabResponseParameter.third
+    Response: "{[Hello World!]}"
+    ResponseLanguage: json
+    PageID: 1001
+  second:
+    Title: Hello World!
+    RequestMethod: GET
+    Response: "{[Hello World!]}"
+    ResponseLanguage: html
+    PageID: 1001

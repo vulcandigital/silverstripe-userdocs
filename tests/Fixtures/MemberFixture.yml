@@ -1,0 +1,7 @@
+SilverStripe\Security\Member:
+  john_doe:
+    ID: 1
+    ClassName: SilverStripe\Security\Member
+    FirstName: John
+    Surname: Doe
+    Email: john@doe.com

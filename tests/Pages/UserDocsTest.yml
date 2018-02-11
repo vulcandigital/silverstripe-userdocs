@@ -1,0 +1,4 @@
+Vulcan\UserDocs\Pages\UserDocs:
+  first:
+    Title: Documentation
+    URLSegment: documentation

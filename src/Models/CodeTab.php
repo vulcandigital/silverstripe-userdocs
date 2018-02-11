@@ -55,6 +55,10 @@ class CodeTab extends DataObject
     {
         $result = parent::validate();
 
+        if (!$this->PageID) {
+            $result->addError('A parent page must be provided');
+        }
+
         if ($this->Response && !$this->ResponseLanguage) {
             $result->addFieldError('ResponseLanguage', 'If you provide a response, you must also specify the response language');
         }
@@ -99,21 +103,23 @@ class CodeTab extends DataObject
     {
         parent::onBeforeWrite();
 
-        if (!$this->Slug || $this->original['Title'] != $this->Title) {
+        if (!$this->Slug || ((isset($this->original['Title']) && $this->original['Title'] != $this->Title))) {
             $this->Slug = $this->generateSlug();
         }
     }
 
     /**
+     * @param null|int $parentId
+     *
      * @return string
      * @throws \Exception
      */
-    private function generateSlug()
+    private function generateSlug($parentId = null)
     {
         $filter = URLSegmentFilter::create();
         $slug = $filter->filter($this->Title);
-        for ($i = 1; $i < 1000; $i++) {
-            $exists = static::get()->filter(['Slug' => $slug, 'PageID' => $this->PageID, 'ID:not' => $this->ID])->first();
+        for ($i = 2; $i < 1000; $i++) {
+            $exists = static::get()->filter(['Slug' => $slug, 'PageID' => $parentId ?: $this->PageID, 'ID:not' => $this->ID])->first();
 
             if ($exists) {
                 $slug = $filter->filter("{$this->Title} $i");
@@ -126,6 +132,9 @@ class CodeTab extends DataObject
         throw new \Exception('A slug could not be generated for this tab after 1000 attempts');
     }
 
+    /**
+     * @return ArrayData
+     */
     public static function getHttpRequestMethods()
     {
         return ArrayData::create([
@@ -137,6 +146,9 @@ class CodeTab extends DataObject
         ]);
     }
 
+    /**
+     * @return string
+     */
     public function getLanguagesAsString()
     {
         $output = [];
@@ -148,16 +160,30 @@ class CodeTab extends DataObject
         return implode(', ', $output);
     }
 
+    /**
+     * @return ArrayData
+     */
     public static function getResponseLanguageMap()
     {
         return ArrayData::create([
             'json' => 'JSON',
-            'xml'  => 'XML'
+            'html'  => 'XML'
         ]);
     }
 
+    /**
+     * @return string|null
+     */
     public function getReadableResponseLanguage()
     {
         return static::getResponseLanguageMap()->{$this->ResponseLanguage};
+    }
+
+    /**
+     * @return mixed|string
+     */
+    public function forTemplate()
+    {
+        return $this->renderWith('Vulcan\UserDocs\Parsers\Shortcode\CodeTab')->forTemplate();
     }
 }

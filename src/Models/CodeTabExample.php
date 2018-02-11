@@ -5,6 +5,7 @@ namespace Vulcan\UserDocs\Models;
 use SilverStripe\Forms\DropdownField;
 use SilverStripe\i18n\i18n;
 use SilverStripe\ORM\DataObject;
+use SilverStripe\ORM\FieldType\DBHTMLText;
 use SilverStripe\View\ArrayData;
 use SilverStripe\View\Parsers\ShortcodeParser;
 
@@ -247,7 +248,7 @@ class CodeTabExample extends DataObject
 
     public function ParsedContent()
     {
-        $content = ShortcodeParser::get_active()->parse($this->Content);
+        $content = DBHTMLText::create()->setValue(ShortcodeParser::get_active()->parse($this->Content));
 
         return $content;
     }
