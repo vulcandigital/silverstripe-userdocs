@@ -1,5 +1,5 @@
 # Shortcodes
-These shortcodes are accessible through the entire site, not just pages belonging this module, however you can enable the syntax highlighter with the following JavaScript:
+These shortcodes are accessible through the entire site, not just pages belonging to this module, however you can enable the syntax highlighter with the following JavaScript:
 
 ```javascript
 hljs.configure({useBR: false});
