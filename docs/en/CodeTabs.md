@@ -9,6 +9,9 @@ A "code tab" is a tabbed-panel with a collection of syntax-highlighted code exam
 | Example Response | If this tab represents an API endpoint. It may be useful for the end-user to provide what that endpoint would respond with (optional - can contain your own shortcodes if used wisely however doing so _may_ have unexpected results) |
 | Response Language | What language is the response returned in, allowed values are `JSON` and `XML` |
 
+## Preview
+![CodeTabs, done right](https://i.imgur.com/kNO7L6D.png)
+
 ## Examples
 You can add as many example as you want with syntax-highlighting to boot.
 
