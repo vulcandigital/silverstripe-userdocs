@@ -8,7 +8,7 @@
             <div class="userdocs-content">
                 $AnchoredContent.RAW
                 <p>&nbsp;</p>
-                $RenderContents
+                $UserDocsContents.RAW
             </div>
         </div>
     </div>
