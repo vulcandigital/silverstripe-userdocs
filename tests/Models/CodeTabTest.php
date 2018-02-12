@@ -55,7 +55,10 @@ class CodeTabTest extends FunctionalTest
 
     public function testLanguagesAsString()
     {
-        $this->assertEquals('PHP, Bash', $this->codeTab->getLanguagesAsString());
+        $languages = explode(', ', $this->codeTab->getLanguagesAsString());
+
+        $this->assertTrue(in_array('PHP', $languages));
+        $this->assertTrue(in_array('Bash', $languages));
     }
 
     public function testResponseLanguageMap()
