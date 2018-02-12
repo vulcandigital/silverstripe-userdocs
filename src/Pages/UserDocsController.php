@@ -5,12 +5,15 @@ namespace Vulcan\UserDocs\Pages;
 use SilverStripe\ORM\FieldType\DBHTMLText;
 use SilverStripe\View\ArrayData;
 use SilverStripe\View\Requirements;
-use Vulcan\UserDocs\Traits\ParseHeadingsAsAnchors;
 
+/**
+ * Class UserDocsController
+ * @package Vulcan\UserDocs\Pages
+ *
+ * @method string getAnchoredContent($content = null, $link = null)
+ */
 class UserDocsController extends \PageController
 {
-    use ParseHeadingsAsAnchors;
-
     private static $allowed_actions = [];
 
     /**
@@ -36,19 +39,6 @@ class UserDocsController extends \PageController
      * @var string
      */
     private static $highlight_version = '9.12.0';
-
-    /**
-     * Render the contents of this category. You should always append ".RAW" when using
-     * this method in a template e.g $RenderContents.RAW
-     *
-     * @return DBHTMLText|string
-     */
-    public function RenderContents()
-    {
-        $output = $this->getAnchoredContent(ArrayData::create(['Parent' => $this])->renderWith('Vulcan\UserDocs\Pages\Includes\Contents'));
-
-        return DBHTMLText::create()->setValue($output);
-    }
 
     /**
      * Use this method to add the default CSS and JS. This will not be added automatically and you should add it

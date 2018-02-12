@@ -2,11 +2,13 @@
 
 namespace Vulcan\UserDocs\Pages;
 
-use Vulcan\UserDocs\Traits\ParseHeadingsAsAnchors;
-
+/**
+ * Class UserDocsPageController
+ * @package Vulcan\UserDocs\Pages
+ *
+ * @method string getAnchoredContent($content = null, $link = null)
+ */
 class UserDocsPageController extends \PageController
 {
-    use ParseHeadingsAsAnchors;
-
     private static $allowed_actions = [];
 }

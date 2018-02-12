@@ -7,7 +7,7 @@
         <div class="col-md-8">
             <div class="userdocs-content">
                 <% if $Content %>$Content<p>&nbsp;</p><% end_if %>
-                $RenderContents.RAW
+                $UserDocsContents.RAW
             </div>
         </div>
     </div>
