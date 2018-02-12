@@ -68,7 +68,8 @@ class Shortcode
      * @param null|ShortcodeParser $parser
      * @param string|null          $tagName
      *
-     * @return \SilverStripe\ORM\FieldType\DBHTMLText|string
+     * @return DBHTMLText|string
+     * @throws \Exception
      */
     public static function codetab($arguments, $content = null, $parser = null, $tagName = null)
     {

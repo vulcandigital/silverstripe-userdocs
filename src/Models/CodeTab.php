@@ -51,6 +51,13 @@ class CodeTab extends DataObject
         'ResponseParameters' => CodeTabResponseParameter::class
     ];
 
+    private static $summary_fields = [
+        'Title'             => 'Title',
+        'Slug'              => 'Slug',
+        'RequestMethod'     => 'Method',
+        'LanguagesAsString' => 'Examples'
+    ];
+
     public function validate()
     {
         $result = parent::validate();
@@ -69,13 +76,6 @@ class CodeTab extends DataObject
 
         return $result;
     }
-
-    private static $summary_fields = [
-        'Title'             => 'Title',
-        'Slug'              => 'Slug',
-        'RequestMethod'     => 'Method',
-        'LanguagesAsString' => 'Examples'
-    ];
 
     public function getCMSFields()
     {
@@ -109,30 +109,39 @@ class CodeTab extends DataObject
     }
 
     /**
-     * @param null|int $parentId
+     * Generate a slug for this CodeTab
      *
      * @return string
      * @throws \Exception
      */
-    private function generateSlug($parentId = null)
+    private function generateSlug()
     {
         $filter = URLSegmentFilter::create();
-        $slug = $filter->filter($this->Title);
-        for ($i = 2; $i < 1000; $i++) {
-            $exists = static::get()->filter(['Slug' => $slug, 'PageID' => $parentId ?: $this->PageID, 'ID:not' => $this->ID])->first();
-
-            if ($exists) {
-                $slug = $filter->filter("{$this->Title} $i");
-                continue;
-            }
-
-            return $slug;
+        $this->Slug = $filter->filter($this->Title);
+        $count = 2;
+        while (!$this->isSlugValid()) {
+            $this->Slug = $filter->filter("{$this->Title} $count");
+            $count++;
         }
 
-        throw new \Exception('A slug could not be generated for this tab after 1000 attempts');
+        return $this->Slug;
     }
 
     /**
+     * Checks to see if the slug is valid by making sure another record, on the same page does not have the same slug
+     *
+     * @return bool
+     */
+    private function isSlugValid()
+    {
+        $record = static::get()->filter(['Slug' => $this->Slug, 'PageID' => $this->PageID, 'ID:not' => $this->ID])->first();
+
+        return ($record) ? false : true;
+    }
+
+    /**
+     * Return a map of the available HTTP request methods
+     *
      * @return ArrayData
      */
     public static function getHttpRequestMethods()
@@ -147,6 +156,8 @@ class CodeTab extends DataObject
     }
 
     /**
+     * Return example languages as a comma (, ) separated list
+     *
      * @return string
      */
     public function getLanguagesAsString()
@@ -161,17 +172,21 @@ class CodeTab extends DataObject
     }
 
     /**
+     * Return a map of the available response languages
+     *
      * @return ArrayData
      */
     public static function getResponseLanguageMap()
     {
         return ArrayData::create([
             'json' => 'JSON',
-            'html'  => 'XML'
+            'html' => 'XML'
         ]);
     }
 
     /**
+     * Get the readable variant of the response language alias. ie cpp => C++
+     *
      * @return string|null
      */
     public function getReadableResponseLanguage()
