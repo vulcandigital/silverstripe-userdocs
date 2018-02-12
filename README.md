@@ -21,3 +21,8 @@ You can find detailed documentation [here](docs)
 
 ## License
 [BSD-3-Clause](LICENSE.md) - [Vulcan Digital Ltd](https://vulcandigital.co.nz)
+
+## Preview
+A beautiful preview in effect for one of our SaaS products
+
+![Preview](https://i.imgur.com/KQayhEU.png)
