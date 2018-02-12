@@ -46,7 +46,7 @@ class Shortcode
     {
         $htmlText = DBHTMLText::create();
 
-        if (!$content) {
+        if (!trim($content)) {
             return $htmlText->setValue('');
         }
 
@@ -75,21 +75,20 @@ class Shortcode
         $pageId = (isset($arguments['page_id'])) ? $arguments['page_id'] : Controller::curr()->ID;
 
         if (!$pageId) {
-            user_error('No page_id was supplied nor found in the active controller', E_USER_ERROR);
+            throw new \Exception("Unable to retrieve a page ID from the current controller, and was also not supplied");
         }
 
         if (!isset($arguments['id'])) {
-            user_error('No id was supplied', E_USER_ERROR);
+            return '[codetab: No id/slug was supplied]';
         }
 
         $record = CodeTab::get()->filter('PageID', $pageId)->filterAny([
-            'ID'   => $arguments['id'],
+            'ID'   => (int)$arguments['id'],
             'Slug' => $arguments['id']
         ])->first();
 
         if (!$record) {
-            $error = 'Code identifier %s was not found as a registered tab for the active page';
-            user_error(sprintf($error), E_USER_ERROR);
+            return '[codetab: id/slug was not found as a registered codetab for the active page]';
         }
 
         return $parser->parse($record->renderWith('Vulcan\UserDocs\Parsers\Shortcode\CodeTab'));

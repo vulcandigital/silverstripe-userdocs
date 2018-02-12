@@ -1,3 +1,14 @@
+Vulcan\UserDocs\Pages\UserDocs:
+  first:
+    ID: 99
+    Title: Documentation
+    URLSegment: docs
+Vulcan\UserDocs\Pages\UserDocsPage:
+  first:
+    ID: 1002
+    Title: Getting Started
+    URLSegment: getting-started
+    ParentID: 99
 Vulcan\UserDocs\Models\CodeTabParameterType:
   first:
     Title: string
@@ -47,3 +58,4 @@ Vulcan\UserDocs\Models\CodeTab:
     ResponseParameters: =>Vulcan\UserDocs\Models\CodeTabResponseParameter.first,=>Vulcan\UserDocs\Models\CodeTabResponseParameter.third
     Response: "{[Hello World!]}"
     ResponseLanguage: json
+    PageID: 1002

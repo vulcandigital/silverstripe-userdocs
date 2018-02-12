@@ -92,6 +92,8 @@ class ShortcodeTest extends FunctionalTest
         $classes = (isset($divTag[0])) ? $divTag[0]->getAttribute('class') : null;
         $this->assertContains('userdocs-codeblock', $classes ?: '', 'The "userdocs-codeblock" class is missing from the result');
         $this->assertNull((isset($divTag[0])) ? $divTag[0]->parent()->parent() : false, 'The only div tag that is expected in the result should be the top most parent');
+        $result = ShortcodeParser::get_active()->parse('[code]       [/code]');
+        $this->assertEquals('', $result);
     }
 
     /**
@@ -101,12 +103,27 @@ class ShortcodeTest extends FunctionalTest
     {
         /** @var CodeTab $tab */
         $tab = $this->objFromFixture(CodeTab::class, 'first');
-        $parser = HtmlDomParser::str_get_html($tab->forTemplate());
+        $parser = HtmlDomParser::str_get_html(ShortcodeParser::get_active()->parse('[codetab,id="hello-world",page_id="1002"]'));
         $this->assertCount(4, $parser->find('div.userdocs-codetab'), 'Four div elements with a class name of "userdocs-codetab" was expected');
         $this->assertNotNull($parser->find('.request-parameters', 0), 'A div with a class name of "userdocs-codetab" and "request-parameters" was expected');
         $this->assertNotNull($parser->find('.response-parameters', 0), 'A div with a class name of "userdocs-codetab" and "response-parameters" was expected');
         $this->assertNotNull($parser->find('.response', 0), 'A div with a class name of "userdocs-codetab" and "response" was expected');
 
-        $this->assertNotContains('[code]bar[/code]', 'Non-parsed shortcodes: CodeTab::forTemplate() should invoke ShortcodeParser::get_active()->parse(..)');
+        $this->assertNotContains('[code]bar[/code]', 'Non-parsed shortcodes: should invoke ShortcodeParser::get_active()->parse(..)');
+
+        // A slug/id has not been specified, this should throw an exception
+        $result = ShortcodeParser::get_active()->parse('[codetab,id="doesnt-exist",page_id="1002"]');
+        $this->assertEquals('[codetab: id/slug was not found as a registered codetab for the active page]', $result);
+
+        $result = ShortcodeParser::get_active()->parse('[codetab,page_id="1002"]');
+        $this->assertEquals('[codetab: No id/slug was supplied]', $result);
+
+        // A slug/id has not been specified, this should throw an exception
+        $this->expectException(\Exception::class);
+        ShortcodeParser::get_active()->parse('[codetab]');
+
+        // no active controller, so the page_id cannot be automatically detected
+        $this->expectException(\Exception::class);
+        ShortcodeParser::get_active()->parse('[codetab,id="hello-world"]');
     }
 }
