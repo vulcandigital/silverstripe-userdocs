@@ -4,7 +4,6 @@
 Create your own user documentation easily for anything! Especially that custom API you made that people need to know how to use, wouldn't it be great to easily document all endpoints, request and response parameters, display beautifully highlighted JSON/XML response examples, code blocks and more.
 
 ## Requirements
-* silverstripe/framework: "^4.0"
 * silverstripe/cms: "^4.0"
 
 ## Installation
@@ -15,6 +14,10 @@ composer require vulcandigital/silverstripe-userdocs
 
 ## Documentation
 You can find detailed documentation [here](docs)
+
+* [Getting Started](docs/en/GettingStarted.md)
+* [Shortcodes](docs/en/Shortcodes.md)
+* [Code Tabs](docs/en/CodeTabs.md)
 
 ## License
 [BSD-3-Clause](LICENSE.md) - [Vulcan Digital Ltd](https://vulcandigital.co.nz)
