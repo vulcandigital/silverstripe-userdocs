@@ -18,6 +18,9 @@
     "phpunit/PHPUnit": "^5.7",
     "squizlabs/php_codesniffer": "3.*"
   },
+  "suggest": {
+    "vulcandigital/silverstripe-pagefeedback": "This module allows you to receive feedback on specific pages of your documentation"
+  },
   "autoload": {
     "psr-4": {
       "Vulcan\\UserDocs\\": "src/",

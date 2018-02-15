@@ -7,6 +7,7 @@
         <div class="col-md-8 col-lg-9">
             <div class="userdocs-content">
                 $AnchoredContent.RAW
+                $PageFeedbackForm
             </div>
         </div>
     </div>
