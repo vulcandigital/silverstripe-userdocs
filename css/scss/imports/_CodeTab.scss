@@ -3,6 +3,17 @@
   border-radius: 5px;
   margin-top: 15px;
 
+  table {
+    margin-bottom: 0;
+    td {
+      p {
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+
   .userdocs-codetab-title {
     padding: 10px;
     background: #a072ed;

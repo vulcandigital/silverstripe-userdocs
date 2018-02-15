@@ -13,7 +13,7 @@
                 <tr<% if $Children %> class="has-children"<% end_if %>>
                     <td>[code]$Parameter[/code]</td>
                     <td><% loop $Types %>[code]$Title[/code]<% if not $Last %>|<% end_if %><% end_loop %></td>
-                    <td>$ParsedExplanation</td>
+                    <td>$ParsedExplanation.RAW</td>
                 </tr><% if $Children %>
                         <% loop $Children %>
                         <tr class="child-parameter">

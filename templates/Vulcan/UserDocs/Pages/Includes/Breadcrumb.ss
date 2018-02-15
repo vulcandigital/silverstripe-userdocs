@@ -1,5 +1,5 @@
 <% if $Breadcrumbs %>
-<nav aria-label="breadcrumb">
+<nav aria-label="breadcrumb" class="userdocs-breadcrumb">
     <ol class="breadcrumb">
         <% loop $Breadcrumbs %>
             <% if not $Last %>
